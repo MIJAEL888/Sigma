@@ -1,0 +1,61 @@
+entity Servicio{
+    codigo String,
+    fechaEntrega LocalDate,
+    nombreSolicitante String,
+    numeroSolicitante String,
+    observaciones Blob,
+    estado EstadoServicio,
+    codigoCliente String,
+    codigoSede String
+}
+
+entity MonitoreoServicio{
+    cantidad Integer,
+    costoTotal Float
+}
+
+entity ComponenteMonitoreo{
+    nombre String required,
+    descripcion String
+}
+
+entity ParamentroMonitoreo{
+    nombre String required,
+    descripcion String,
+    costo Float
+}
+
+enum EstadoServicio{
+    REGISTRADO, COTIZADO, APROBADO, NOAPROBADO
+}
+
+entity TipoServicios{
+    nombre String required,
+    descripcion String
+}
+entity TipoSolicitud{
+    nombre String required,
+    descripcion String
+}
+entity TipoInduccion{
+    nombre String required,
+    descripcion String
+}
+entity RequisitosSeguridad{
+    nombre String required,
+    descripcion String
+}
+
+relationship OneToMany {
+    Servicio{monitoreoServicio} to MonitoreoServicio,
+    ParamentroMonitoreo{monitoreoServicio} to MonitoreoServicio,
+    TipoServicios{sevicio} to Servicio,
+    TipoSolicitud{sevicio} to Servicio,
+    TipoInduccion{sevicio} to Servicio,
+    RequisitosSeguridad{sevicio} to Servicio,
+    ComponenteMonitoreo{paramentroMonitoreo} to ParamentroMonitoreo
+}
+
+
+paginate Cliente, Sede with pagination
+angularSuffix * with srv

@@ -1,0 +1,62 @@
+entity Empleado{
+    nombre String required,
+    apellidoPaterno String required,
+    apellidoMaterno String required,
+    tipoDocumento TipoDocumento,
+    numeroDocumento String maxlength(15),
+    fechaNacimiento LocalDate,
+    fechaIngreso LocalDate,
+    tipoContrato TipoContrato,
+    tipoAportacion TipoPension,
+    estado EstadoEmpleado,
+    fechaCreacion LocalDate,
+    fechaActualizacion LocalDate,
+    direccion String,
+    estadoCivil EstadoCivil
+}
+
+entity Posicion{
+    nombre String required,
+    descripcion Blob,
+    funciones Blob
+}
+
+entity Area{
+    nombre String required,
+    descripcion Blob,
+    comentario Blob
+}
+
+enum EstadoCivil {
+    SOLTERO,CONVIVIENTE,CASADO,DIVORCIADO,VIUDO,OTROS
+}
+
+enum TipoDocumento{
+    DNI,PASSAPORTE,RUC
+}
+
+enum TipoContrato{
+    PLANILLA, RECIBO
+}
+
+enum TipoPension{
+    SNP, SPP
+}
+
+enum EstadoEmpleado{
+    ACTIVO, CESE
+}
+
+/**
+ * One to many relationship.
+ */
+relationship OneToMany {
+    Area{area} to Posicion,
+    Posicion{empleado} to Empleado
+}
+relationship ManyToOne {
+	Area{gerencia} to Area
+}
+
+paginate Empleado with pagination
+angularSuffix * with rrhh

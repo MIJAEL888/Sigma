@@ -1,0 +1,45 @@
+entity Equipo{
+    codigoEquipo String required,
+    serie String required,
+    calibradoDesde LocalDate,
+    calibradoHasta LocalDate,
+    rutaDocumento String,
+    documentoCalibracion String,
+    estado EstadoEquipo,
+    fechaCompra LocalDate,
+    observacion Blob,
+    comentario Blob
+}
+
+entity TipoEquipo{
+    nombre String required,
+    codigo String,
+    descripcion Blob
+}
+
+entity Modelo{
+    nombre String required,
+    descripcion Blob
+}
+
+entity Marca{
+    nombre String required
+    descripcion Blob
+}
+
+enum EstadoEquipo{
+    CALIBRADO, MANTENIMIENTO, BAJA 
+}
+
+/**
+ * One to many relationship.
+ */
+relationship OneToMany {
+    Marca{modelo} to Modelo,
+    Modelo{equipo} to Equipo{modelo},
+    TipoEquipo{modelo} to Modelo{tipoEuipo}
+}
+
+paginate Equipo with pagination
+paginate TipoEquipo with infinite-scroll
+angularSuffix * with equi

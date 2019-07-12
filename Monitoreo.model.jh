@@ -1,0 +1,160 @@
+entity Proyecto{
+    codigo String,
+    codigoSolicitud String,
+    codigoResponsable String,
+    estado EstadoProyecto,
+    fechaIncio LocalDate,
+    fechaFina LocalDate
+}
+
+entity EquipoMonitoreo{
+    codigoEquipo String,
+    reservadoDesde LocalDate,
+    reservadoHasta LocalDate,
+    documentoCalibracion String
+}
+
+entity LaboratorioMonitoreo{
+    codigoLaboratorio String,
+    fechaReseva LocalDate
+}
+
+entity Observacion{
+    descripcion Blob,
+    comentario Blob,
+    codigoMonitorista String  
+}
+
+entity Componente{
+    nombre String required,
+    descripcion String,
+    protocolo Blob,
+    guia String,
+    iso String,
+    objetivos Blob
+}
+
+entity TipoComponente{
+    nombre String required,
+    descripcion String
+}
+
+entity Paramentro{
+    nombre String required,
+    siglas String required,
+    descripcion String,
+    costo Float,
+    metodologia Blob,
+    metodoEnsayo Blob,
+    limiteCuantificacion Integer
+
+}
+entity NormaCalidad{
+    nombre String required,
+    codigo String,
+    fechaPublicacion LocalDate,
+    tipo TipoNorma,
+    fuente String,
+    rutaDocumento String,
+    nombreDocumento String
+}
+
+entity PuntoMonitoreo{
+    codigo String required,
+    codigoSede String required,
+    codigoCliente String required,
+    coordenadaNorte String required,
+    coordenadaEste String required,
+    descripcion Blob,
+    comentario Blob,
+    latitud Float,
+    longitud Float,
+    observacion Blob
+}
+
+entity PuntoMonitoreoObs{
+    codigo String required,
+    descripcion Blob,
+    comentario Blob,
+    observacion Blob
+}
+
+entity FotografiaPunto{
+    nombre String required,
+    ruta String,
+    extension String
+}
+
+entity FotografiaMonitoreo{
+    nombre String required,
+    ruta String,
+    extension String
+}
+
+enum EstadoProyecto{
+    REGISTRADO, PLANIFICADO, MONITOREADO, FINALIZADO
+}
+enum TipoNorma{
+    NACIONAL, INTERNACIONAL
+}
+
+entity Unidades {
+    nombre String,
+    codigo String,
+    descripcion Blob
+}
+
+entity Resultado{
+    fechaInicio ZonedDateTime,
+    fehcaFin ZonedDateTime,
+    valorMinimo String,
+    valorMaximo String,
+    valorFinal String,
+    valorFinalNum Float,
+    codigoLaboratorio String,
+    codigoEquipo String
+}
+
+entity ResultadoEmisiones{
+    tipoEquipo String,
+    combustible String,
+    consumo Float,
+    horaPorMes Float,
+    altura Float,
+    diametro Float,
+    seccion String
+}
+
+entity ResultadoMetereologia{
+    fecha ZonedDateTime,
+    valor String,
+    valorDecimal Float
+}
+
+/**
+ * One to many relationship.
+ */
+relationship OneToMany {
+    Proyecto{PuntoMonitoreo} to PuntoMonitoreoObs{proyecto},
+    PuntoMonitoreo{puntoMonitoreoObs} to PuntoMonitoreoObs,
+    PuntoMonitoreo{Paramentro} to Paramentro,
+    Componente{tipoComponente} to TipoComponente,
+    TipoComponente{Paramentro} to Paramentro,
+    NormaCalidad{Paramentro} to Paramentro,
+    Unidades{Paramentro} to Paramentro,
+    PuntoMonitoreo{fotografiaPunto} to FotografiaPunto,
+    PuntoMonitoreoObs{fotografiaMonitoreo} to FotografiaMonitoreo,
+    Proyecto{equipo} to EquipoMonitoreo{proyecto},
+    Proyecto{observacion} to Observacion{proyecto},
+    Proyecto{laboratorio} to LaboratorioMonitoreo,
+    Resultado{resultadoEmisiones} to ResultadoEmisiones,
+    Resultado{resultadoMetereologia} to ResultadoMetereologia,
+    Componente{observacion} to Observacion
+}
+
+/**
+ * One to one relationship.
+ */
+relationship OneToOne {
+    PuntoMonitoreoObs{resultado} to Resultado{puntoMonitoreoObs}
+}
