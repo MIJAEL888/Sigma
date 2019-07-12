@@ -1,0 +1,80 @@
+entity Equipo{
+    codigoEquipo String required,
+    serie String required,
+    calibradoDesde LocalDate,
+    calibradoHasta LocalDate,
+    rutaDocumento String,
+    documentoCalibracion String,
+    estado EstadoEquipo,
+    fechaCompra LocalDate,
+    observacion Blob,
+    comentario Blob
+}
+
+entity TipoEquipo{
+    nombre String required,
+    codigo String,
+    descripcion Blob
+}
+
+entity Modelo{
+    nombre String required,
+    descripcion Blob
+}
+
+entity Marca{
+    nombre String required
+    descripcion Blob
+}
+
+enum EstadoEquipo{
+    CALIBRADO, MANTENIMIENTO, BAJA 
+}
+
+entity Laboratorio{
+    razonSocial String required,
+    direccion String required,
+    ruc String required,
+    acreditadoPor String,
+    numeroAcreditacion String,
+    vigenciaDesde LocalDate,
+    vigenciaHasta LocalDate
+    telefono String,
+    correo String,
+    nombreContacto String,
+    fechaCreacion LocalDate
+}
+
+entity Monitorista{
+    nombre String required,
+    apellidoPaterno String required,
+    apellidoMaterno String required,
+    dni String required,
+    fechaNacimiento LocalDate
+}
+
+entity TipoSeguro{
+    nombre String required,
+    descripcion Blob,
+    fechaCaudicidad LocalDate,
+    codigoTipoSeguro Integer
+}
+
+/**
+ * One to many relationship.
+ */
+relationship OneToMany {
+    Marca{modelo} to Modelo,
+    Modelo{equipo} to Equipo{modelo},
+    TipoEquipo{modelo} to Modelo{tipoEuipo},
+     Laboratorio{laboratorio} to Monitorista
+}
+
+relationship ManyToMany {
+	Monitorista{tipoSeguro} to TipoSeguro{monitorista}
+}
+
+
+paginate Equipo, Laboratorio, Monitorista  with pagination
+paginate TipoEquipo with infinite-scroll
+angularSuffix * with lgt
