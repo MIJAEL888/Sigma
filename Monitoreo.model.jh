@@ -158,3 +158,6 @@ relationship OneToMany {
 relationship OneToOne {
     PuntoMonitoreoObs{resultado} to Resultado{puntoMonitoreoObs}
 }
+
+paginate Proyecto, PuntoMonitoreo, Resultado, Paramentro, PuntoMonitoreoObs with pagination
+angularSuffix * with mnt

@@ -103,7 +103,7 @@ relationship OneToMany {
     TipoSolicitud{sevicio} to Servicio,
     TipoInduccion{sevicio} to Servicio,
     RequisitosSeguridad{sevicio} to Servicio,
-    ComponenteMonitoreo{paramentroMonitoreo} to ParamentroMonitoreo
+    ComponenteMonitoreo{paramentroMonitoreo} to ParamentroMonitoreo,
     Departamento{provincia} to Provincia,
     Provincia{distrito} to Distrito,
     Distrito{sede} to Sede,
@@ -112,6 +112,5 @@ relationship OneToMany {
     Sede{servicio} to Servicio
 }
 
-
-paginate Servicio, Cliente, Sede with pagination
+paginate MonitoreoServicio, Servicio, ParamentroMonitoreo, Cliente, Sede with pagination
 angularSuffix * with cmr
