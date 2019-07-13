@@ -4,7 +4,9 @@ entity Proyecto{
     codigoResponsable String,
     estado EstadoProyecto,
     fechaIncio LocalDate,
-    fechaFina LocalDate
+    fechaFina LocalDate,
+    descripcion TextBlob,
+    comentario TextBlob
 }
 
 entity EquipoMonitoreo{
@@ -20,18 +22,18 @@ entity LaboratorioMonitoreo{
 }
 
 entity Observacion{
-    descripcion Blob,
-    comentario Blob,
+    descripcion TextBlob,
+    comentario TextBlob,
     codigoMonitorista String  
 }
 
 entity Componente{
     nombre String required,
     descripcion String,
-    protocolo Blob,
+    protocolo TextBlob,
     guia String,
     iso String,
-    objetivos Blob
+    objetivos TextBlob
 }
 
 entity TipoComponente{
@@ -44,8 +46,8 @@ entity Paramentro{
     siglas String required,
     descripcion String,
     costo Float,
-    metodologia Blob,
-    metodoEnsayo Blob,
+    metodologia TextBlob,
+    metodoEnsayo TextBlob,
     limiteCuantificacion Integer
 
 }
@@ -55,8 +57,9 @@ entity NormaCalidad{
     fechaPublicacion LocalDate,
     tipo TipoNorma,
     fuente String,
-    rutaDocumento String,
-    nombreDocumento String
+    rutaDocNorma String,
+    nombreDocNorma String,
+    documentoNorma Blob
 }
 
 entity PuntoMonitoreo{
@@ -65,30 +68,32 @@ entity PuntoMonitoreo{
     codigoCliente String required,
     coordenadaNorte String required,
     coordenadaEste String required,
-    descripcion Blob,
-    comentario Blob,
+    descripcion TextBlob,
+    comentario TextBlob,
     latitud Float,
     longitud Float,
-    observacion Blob
+    observacion TextBlob
 }
 
 entity PuntoMonitoreoObs{
     codigo String required,
-    descripcion Blob,
-    comentario Blob,
-    observacion Blob
+    descripcion TextBlob,
+    comentario TextBlob,
+    observacion TextBlob
 }
 
 entity FotografiaPunto{
     nombre String required,
     ruta String,
-    extension String
+    extension String,
+    fotografia ImageBlob
 }
 
 entity FotografiaMonitoreo{
     nombre String required,
     ruta String,
-    extension String
+    extension String,
+    fotografia ImageBlob
 }
 
 enum EstadoProyecto{
@@ -101,7 +106,7 @@ enum TipoNorma{
 entity Unidades {
     nombre String,
     codigo String,
-    descripcion Blob
+    descripcion TextBlob
 }
 
 entity Resultado{
@@ -159,5 +164,5 @@ relationship OneToOne {
     PuntoMonitoreoObs{resultado} to Resultado{puntoMonitoreoObs}
 }
 
+microservice * with monitoreo
 paginate Proyecto, PuntoMonitoreo, Resultado, Paramentro, PuntoMonitoreoObs with pagination
-angularSuffix * with mnt

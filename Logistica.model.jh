@@ -3,28 +3,30 @@ entity Equipo{
     serie String required,
     calibradoDesde LocalDate,
     calibradoHasta LocalDate,
-    rutaDocumento String,
-    documentoCalibracion String,
+    rutaDocCalibracion String,
+    nombreDocCalibracion String,
+    documentoCalibracion Blob,
     estado EstadoEquipo,
     fechaCompra LocalDate,
-    observacion Blob,
-    comentario Blob
+    observacion TextBlob,
+    comentario TextBlob,
+    test AnyBlob
 }
 
 entity TipoEquipo{
     nombre String required,
     codigo String,
-    descripcion Blob
+    descripcion TextBlob
 }
 
 entity Modelo{
     nombre String required,
-    descripcion Blob
+    descripcion TextBlob
 }
 
 entity Marca{
     nombre String required
-    descripcion Blob
+    descripcion TextBlob
 }
 
 enum EstadoEquipo{
@@ -37,6 +39,9 @@ entity Laboratorio{
     ruc String required,
     acreditadoPor String,
     numeroAcreditacion String,
+    rutaDocAcreditacion String,
+    nombreDocAcreditacion String,
+    documentoAcreditacion Blob,
     vigenciaDesde LocalDate,
     vigenciaHasta LocalDate
     telefono String,
@@ -55,7 +60,7 @@ entity Monitorista{
 
 entity TipoSeguro{
     nombre String required,
-    descripcion Blob,
+    descripcion TextBlob,
     fechaCaudicidad LocalDate,
     codigoTipoSeguro Integer
 }
@@ -67,14 +72,13 @@ relationship OneToMany {
     Marca{modelo} to Modelo,
     Modelo{equipo} to Equipo{modelo},
     TipoEquipo{modelo} to Modelo{tipoEuipo},
-     Laboratorio{laboratorio} to Monitorista
+    Laboratorio{laboratorio} to Monitorista
 }
 
 relationship ManyToMany {
 	Monitorista{tipoSeguro} to TipoSeguro{monitorista}
 }
 
-
+microservice * with logistica
 paginate Equipo, Laboratorio, Monitorista  with pagination
-paginate TipoEquipo with infinite-scroll
-angularSuffix * with lgt
+paginate Modelo, Marca, TipoEquipo with infinite-scroll

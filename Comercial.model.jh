@@ -3,7 +3,8 @@ entity Servicio{
     fechaEntrega LocalDate,
     nombreSolicitante String,
     numeroSolicitante String,
-    observaciones Blob,
+    observacion TextBlob,
+    descripcion TextBlob,
     estado EstadoServicio,
     codigoCliente String,
     codigoSede String
@@ -53,7 +54,8 @@ entity Cliente{
     telefono String,
     correo String,
     nombreContacto String,
-    actividad Blob,
+    actividad TextBlob,
+    comentario TextBlob,
     fechaCreacion LocalDate,
     codigoZona String
 }
@@ -63,12 +65,13 @@ entity Sede{
     referencia String,
     latitud String,
     longitud String,
-    actividad Blob,
+    actividad TextBlob,
     telefono String,
-    descripcion Blob,
-    comentario Blob,
-    rutaDocumento String,
-    documentoEstudio String
+    descripcion TextBlob,
+    comentario TextBlob,
+    rutaDocEstudio String,
+    nombreDocEstudio String,
+    documentoEstudio Blob
 }
 
 entity ContactoSede{
@@ -112,5 +115,5 @@ relationship OneToMany {
     Sede{servicio} to Servicio
 }
 
+microservice * with comercial
 paginate MonitoreoServicio, Servicio, ParamentroMonitoreo, Cliente, Sede with pagination
-angularSuffix * with cmr

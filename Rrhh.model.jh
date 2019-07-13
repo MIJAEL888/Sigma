@@ -17,14 +17,14 @@ entity Empleado{
 
 entity Posicion{
     nombre String required,
-    descripcion Blob,
-    funciones Blob
+    descripcion TextBlob,
+    funciones TextBlob
 }
 
 entity Area{
     nombre String required,
-    descripcion Blob,
-    comentario Blob
+    descripcion TextBlob,
+    comentario TextBlob
 }
 
 enum EstadoCivil {
@@ -58,5 +58,5 @@ relationship ManyToOne {
 	Area{gerencia} to Area
 }
 
+microservice * with rrhh
 paginate Empleado with pagination
-angularSuffix * with rrhh
